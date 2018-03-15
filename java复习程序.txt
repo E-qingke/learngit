@@ -1,0 +1,1229 @@
+过程考核1、2
+
+编写Application程序, 从命令行参数输入10个整数并保存在数组中，求数组中最大、最小、数据的和、平均值。
+
+import java.util.Scanner; 
+//导入Scanner类，然后就是创建一个对象：Scanner sc = new Scanner(System.in);
+public class ArrValue
+{
+	public static void main(String[] args)
+	{
+		int[] arr = new int[10];
+		Scanner s = new Scanner(System.in);
+		for (int i = 0; i < 10; i++)
+		{
+			arr[i] = s.nextInt();
+		}
+		
+		//获取整型数组的最大值
+		int max = 0;
+		for (int x = 0; x < 10; x++)
+		{
+			if (arr[x] > arr[max])
+			{
+				max = x;
+			}
+		}
+		System.out.println("max = "+arr[max]);
+		
+		//获取整型数组的最小值
+		int min = 0;
+		for (int x = 0; x < 10; x++)
+		{
+			if (arr[x] < arr[min])
+			{
+				min = x;
+			}
+		}
+		System.out.println("min = "+arr[min]);
+		
+		//获取整型数组的和
+		int sum = 0;
+		for (int x = 0; x < arr.length; x++)
+		{
+			sum += arr[x];
+		}
+		System.out.println("sum = "+sum);
+		
+		//获取整型数组的平均值
+		int avg = sum/arr.length;
+		System.out.println("average = "+avg);
+		
+		s.close();
+	}
+}
+ 
+
+2、编写Java Appet 程序打印 “水仙花” 数 (它的个、十、百位数字的立方的和等于该数本身，如：153=1^3+5^3+3^3)
+
+class  shuixianhua
+{
+	public static void main(String[] args) 
+	{
+		int m,n,p,q;
+		System.out.println("水仙花的数如下：");
+		for(int i=100;i<=999;i++)
+		{
+			m=i%10;
+			q=i/10;
+			n=q%10;
+			p=q/10;
+
+			if(i==(m*m*m+n*n*n+p*p*p))
+			System.out.print(i+" ");
+		}
+	}
+}
+/*	
+水仙花的数如下：
+153 370 371 407
+*/
+
+3、统计含有空格、逗号、句号的单词数。
+
+public class WordCounter 
+{
+	public static void main(String[] args)
+	{
+		String s="I am happy,and you are sad！";
+		String[] array=s.split("\\W");  // \\W不能识别中文
+		/*for(int i = 0; i < array.length; i++){
+			System.out.println(array[i]);
+		}*/
+		System.out.println(array.length);
+	}
+
+}
+ 
+
+4、验证带区号的电话号码的合法性。（正则表达式）
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+public class IsPhone
+{
+	public static void main(String[] args) 
+	{
+		String s = "0553-6217549";
+		if (isPhone(s))
+		{
+			System.out.println("该电话号码合法");
+		}
+		else 
+		{
+			System.out.println("该电话号码不合法");
+		}
+	}
+	
+	public static boolean isPhone(String str)
+	{   
+        Pattern p = null;  //pattern 要符合的那种模式
+        Matcher m = null;  //matcher 用这种模式匹配产生的结果
+        boolean b = false;    
+        p = Pattern.compile("^[0][1-9]{2,3}-[0-9]{5,10}$");
+        if(str.length() >9)
+        {   
+			m = p.matcher(str);
+            b = m.matches(); 
+        }
+        
+        return b;
+    }
+
+}
+//该电话号码合法
+
+5、编程实现：界面上有3个标签,3个文本框, 一个” 比较” 按钮,分别在两个文本框输入的两个整数，用户按下“比较”按钮后，两个整数中最大值显示在第三个文本框。界面如图:
+
+import java.awt.event.*; 
+import javax.swing.*; 
+
+public class Add extends JFrame implements ActionListener
+	{ 
+		JLabel la1=new JLabel("第1个数"); 
+		JLabel la2=new JLabel("第2个数"); 
+		JLabel la3=new JLabel("最大数"); 
+		JTextField txt1=new JTextField(5); 
+		JTextField txt2=new JTextField(5); 
+		JTextField txt3=new JTextField(5); 
+		JPanel panel=new JPanel(); 
+		JButton b=new JButton("比较"); 
+
+		public Add()
+			{ 
+				super("求两数中的最大数"); 
+
+				panel.add(la1); 
+				panel.add(txt1); 
+				panel.add(la2); 
+				panel.add(txt2); 
+				panel.add(la3); 
+				panel.add(txt3); 
+				txt3.setEditable(false); 
+				b.addActionListener(this); 
+				panel.add(b); 
+				this.getContentPane().add(panel); 
+				this.setBounds(100, 100, 500, 100); 
+				this.setDefaultCloseOperation(3); 
+				this.setResizable(false); 
+				this.setVisible(true); 
+			} 
+
+		public static void main(String[] args)
+			{ 
+				new Add(); 
+			} 
+
+		public void actionPerformed(ActionEvent e)
+			{ 
+				int x=0; 
+				int y=0; 
+				int z=0; 
+				if(e.getSource()==b)
+					{ 
+						x=new Integer(txt1.getText()); 
+						y=new Integer(txt2.getText()); 
+						//z=x+y;
+						if(x>y)
+							z = x;
+						else
+							z = y;
+					} 
+		txt3.setText(String.valueOf(z)); 
+	} 
+}
+ 
+
+6、写一个方法void sanjiao(int a,int b,int c)，判断三个参数是否能构成一个三角形，如果不能则抛出异常IllegalArgumentException，显示异常信息a,b,c+”不能构成三角形”，如果可以构成则显示三角形三个边长，在主方法中得到命令行输入的三个整数，调用此方法，并捕获异常。
+
+import java.util.Scanner;
+public class Test2
+	{
+		void sanjiao()
+		{	
+			int a;
+			int b;
+			int c;
+			System.out.println("请输入三条边长");
+			Scanner reader=new Scanner(System.in);
+			a=reader.nextInt();
+			b=reader.nextInt();
+			c=reader.nextInt();
+			if(a+b>c&&a+c>b&&b+c>a)
+				{
+					System.out.println("三角形的边长分别为"+"a="+a+" "+"b="+b+" "+"c="+" "+c);
+				}
+			else
+				{
+					System.out.println("不能构成三角形");
+				}
+			if(a<0||b<0||c<0)
+				{
+					System.out.println("三条边不能为负");
+				}		
+		}
+		public static void main(String[] args)
+			{
+				Test3 t=new Test3();
+				try{
+					t.sanjiao();  //数字格式化异常
+					}catch(NumberFormatException nfe){
+						System.out.println("请输入正整数");
+					}catch(IllegalArgumentException iae){
+						System.out.println("不能构成三角形！");
+					}catch(Exception e){
+						System.out.println("-----程序出错-----");
+					}
+			}
+	}
+
+7、接收键盘输入的字符串，用FileInputStream类将字符串写入文件，用FileOutputStream类读出文件内容显示在屏幕上。
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+public class FileOperation
+	{
+		public static void main(String[] args)
+			{
+				try{
+						System.out.println("Pleaseinput:");
+
+						File myfile = new File("save.txt");
+
+						byte[] outCh = new byte[100];
+
+						int bytes = System.in.read(outCh, 0, 100);
+
+						FileOutputStream Fout = new FileOutputStream(myfile);
+
+						Fout.write(outCh,0,bytes);
+
+						byte[] inCh = new byte[bytes];
+
+						FileInputStream Fin = new FileInputStream(myfile);
+
+						Fin.read(inCh);
+
+						System.out.println(new String(inCh));
+
+				   } catch (IOException e){
+					   System.out.println(e.toString());
+				   }
+			}
+	}
+ 
+
+8、利用Runnable接口改写下列程序
+import java.applet.*;
+import java.awt.*;
+class  left extends Thread
+{public void run()
+ { for(int i=0;i<=5;i++)
+   {System.out.println("i am teacher");
+       try{
+    sleep(10);}
+   catch(InterruptedException e){}
+   }
+   }
+};
+class  right extends Thread
+{public void run()
+ { for(int j=0;j<=5;j++)
+   {System.out.println("you are student");
+       try{
+    sleep(10);}
+   catch(InterruptedException e){}
+   }
+   }
+};
+public class  mythread  
+{
+ public static void main(String[] args) 
+	{ right r=new right();
+      left l=new left();
+    r.start();
+	 l.start();
+	}
+}
+上述程序运行结果：
+ 
+
+改写后源代码：
+import java.applet.*;
+import java.awt.*;
+
+class left implements Runnable
+{
+	public void run()
+	{ 
+		for(int i=0;i<=5;i++)
+			{
+				System.out.println("i am teacher");
+			}
+	}
+};	
+
+class  right implements Runnable
+{
+	public void run()
+	{ 
+		for(int j=0;j<=5;j++)
+		{
+			System.out.println("you are student");
+		}
+   }
+};
+
+public class RunnableDemo  
+{
+	public static void main(String[] args) 
+	{
+		right r=new right();
+		left l=new left();
+		new Thread(r).run() ;
+		new Thread(l).run() ;
+	}
+}
+结果：
+ 
+实验二
+1、输出100以内的所有素数。
+class sushu 
+{
+	public static void main(String[] args) 
+	{
+				int i,j;
+				for(i=2;i<=100;i++)
+					{
+						for(j=2;j<=i/2;j++)
+						{
+							if(i%j==0)
+								break;
+						}
+						if(j>i/2)
+							System.out.print(i+" ");
+					}
+	}
+}
+ 
+
+分别用do-while和for循环计算1+1/2!+1/3!+1/4!...的前20项和。
+(for语句)
+class fact 
+{
+	public static void main(String[] args) 
+	{
+		double n=0;
+		double y;
+		for (double m=1; m<=20; m++)
+		{
+			
+			y = 1.0/fact(m);
+			n = n+y;
+		}
+		System.out.println("前二十项和是"+" "+n);
+	}
+
+	public static double fact(double i)
+	{
+		double k=1;
+		for (double x=1; x<=i; x++)
+		{
+			k=k*x;
+		}
+		return k;
+	}
+}
+
+（do while 语句）
+class fact 
+{
+	public static void main(String[] args) 
+	{
+		double n=0;
+		double y;
+		double m=1;
+		do
+		{
+			y = 1.0/fact(m);
+			n = n+y;
+			m++;
+		}while(m<=20);
+		System.out.println("前二十项和是"+" "+n);
+	}
+
+	public static double fact(double i)
+	{
+		double k=1;
+		for (double x=1; x<=i; x++)
+		{
+			k=k*x;
+		}
+		return k;
+	}
+}
+ 
+
+实验三
+定义一个学生类(Student)，属性有private的名字(name), public的年龄(age),专业（specialty）和封装name属性的方法，编写Application，创建一个学生对象，设置name和age属性值，然后调用一个方法（打印出学生的名字name和年龄age）。
+public class Application 
+{
+	public static void main(String[] args) 
+	{
+		Student s = new Student();
+		s.setName("aa");
+		s.age = 12;
+		s.print(s);
+	}
+}
+
+class Student 
+{
+	private String name;
+	public int age;
+	public void setName(String name) 
+	{
+		this.name = name;
+	}
+	
+	public String getName() 
+	{
+		return name;
+	}
+	
+	public void print(Student s) 
+	{
+		System.out.println(s.name + " " + age);
+	}
+}
+
+2、定义一个复数(z=x+iy)类Complex，包含：两个属性：实部x和虚部y，默认构造函数 Complex()，设置x=0,y=0，构造函数：Complex(int i,int j)。
+class Complex
+{
+	private int x;
+	private int y;
+
+	Complex(int x,int y)
+	{
+		this.x = x;
+		this.y = y;
+	}
+
+	public int  getX()
+	{
+		return this.x;
+	}
+	public int getY()
+	{
+		return this.y;
+	}
+
+	public void showComp(int x,int y)
+	{
+		System.out.println(x+"+"+y+"i");
+	}
+
+	public Complex addComp(Complex C1,Complex C2)
+	{
+		return new Complex(C1.getX() + C2.getX(), C1.getY() + C2.getY());
+	}
+
+	public Complex subComp(Complex C1,Complex C2)
+	{
+		return new Complex(C1.getX() - C2.getX(), C1.getY() - C2.getY());
+	}
+
+	public Complex multiComp(Complex C1,Complex C2)
+	{
+		return new Complex(C1.getX()*C2.getX()-C1.getY()*C2.getY(), C1.getX()*C2.getY()+C2.getX()*C1.getY());
+	}
+
+	public boolean equalComp(Complex C1,Complex C2)
+	{
+		if( C1.getX()==C2.getX() && C1.getY()==C2.getY())
+			return true;
+		else
+			return false;
+	}
+}
+
+class complexdemo
+{
+	public static void main(String[] args)
+	{
+		Complex a1 = new Complex(2,9);
+		Complex a2 = new Complex(1,5);
+
+		a1.showComp(2,9);
+		a2.showComp(1,5);
+
+		Complex result1 = addComp(a1,a2);
+		showComp(result1);
+		Complex result2 = subComp(a1,a2);
+		showComp(result2);
+		Complex result3 = multiComp(a1,a2);
+		showComp(result3);
+
+		boolean result4 = equalComp(a1,a2);
+		System.out.println(result4);
+	}
+}
+
+实验四
+编写两个类Point2D，Point3D来表示二维空间和三维空间的点。
+
+class Point2D
+{
+     public int x;
+     public int y;
+
+     public    Point2D(int x,int y){
+         this.x=x;
+         this.y=y;
+     }
+
+     public void offset(int a,int b){
+         this.x=x+a;
+         this.y=y+b;
+     }
+ }
+
+ public class Point3D extends Point2D
+ {
+     private int z;
+     
+     public Point3D(int x,int y,int z){
+         super(x,y);
+         this.z=z;
+     }
+     
+      public Point3D(Point2D p,int z){
+         super(p.x,p.y);
+         this.z=z;
+     }
+     public void offset(int a,int b,int c){
+         this.x=x+a;
+         this.y=y+b;
+         this.z=z+c;
+     }
+     public static void main(String [] args){
+         Point2D p2d1 = new Point2D(1,5);
+         Point2D p2d2 = new Point2D(2,6);
+         double x1=Math.abs(p2d1.x-p2d2.x);
+         double y1=Math.abs(p2d1.y-p2d2.y);
+         double length = Math.sqrt(x1*x1+y1*y1);
+         System.out.println(length);
+         Point2D p3d1 = new Point2D(4,5);
+         Point2D p3d2 = new Point2D(7,8);
+         double x2=Math.abs(p3d1.x-p3d2.x);
+         double y2=Math.abs(p3d1.y-p3d2.y);
+         double length2 = Math.sqrt(x2*x2+y2*y2);
+         System.out.println(length2);
+     }
+ }
+ 
+
+2、定义抽象类Shape，抽象方法为showArea()，再定义矩形类Rectangle,正方形类Square,圆类 Circle，和各自的属性。定义主类、主方法，在main方法中构造3个对象，调用showArea方法；定义接口DiagArea，其中包含方法double getDiagonal()，在主main方法中输出方法执行结果。
+
+abstract class Shape {//定义抽象类Shape
+     abstract void showArea();
+ }
+ interface DiagArea
+ {
+     abstract double getDiagonal();;
+     abstract double getArea();
+ }
+ class Rectangle extends Shape implements DiagArea//定义抽象类Shape
+ {
+     public double x;
+     public double y;
+     public Rectangle(double x,double y){
+         this.x=x;
+         this.y=y;
+     }
+     void showArea(){
+         System.out.println(x*y);
+     }
+     public double getDiagonal(){
+     double length = Math.sqrt(x*x+y*y);
+     return length;
+     }
+     public double getArea(){
+         double Area1 = x*y;
+         return Area1;
+     }
+ }
+ class Square extends Shape//正方形类Square
+ {
+     double x;
+     double length = Math.sqrt(2*x*x);
+     public    Square(double x){
+         this.x=x;
+     }
+     void showAll(){
+     System.out.println(x);
+     System.out.println(x*x);
+     System.out.println(length);
+     }
+     void showArea(){
+         System.out.println(x*x);   
+     }
+ }
+ class Square1 extends Rectangle //正方形类Square1
+ {
+     public Square1(double x,double y){
+         super(x,y);
+     }
+
+     double length = Math.sqrt(2*x*y);
+     
+     void showAll(){
+     System.out.println(x);
+     System.out.println(x*y);
+     System.out.println(length);
+     }
+     void showArea(){
+         System.out.println(x*y);
+     
+     }
+ }
+ class Circle extends Shape//圆类 Circle
+ {   
+     double r;
+     public    Circle(double r){
+         this.r=r;
+     }
+     void showArea(){
+         System.out.println(3.14*r*r);
+     }
+ }
+ public class Test//测试类
+{
+     public static void main(String [] args){
+         Rectangle A1 = new Rectangle(8,9);    
+         Square A2 = new Square(8);    
+         Circle A3 = new Circle(9);    
+         Square1 A4 = new Square1(6,6);    
+
+             A1.showArea();
+             A2.showArea();
+             A3.showArea();
+         double a = A1.getDiagonal();
+         double b = A1.getArea();
+         System.out.println(a+" \n"+b);
+
+         A2.showAll();
+         A4.showAll();
+     }
+ }
+
+实验五
+编程,接受用户输入一段英文文字后，输出其中的字符数、单词数和句子数（设句子以“？”、“！”、“.”结束）。
+import java.util.Scanner;
+
+public class demo
+{
+	public static void main(String[] args)
+	{
+		int sentenceCount=0;
+		Scanner sc=new Scanner(System.in);
+		System.out.println("请输入字符串并以“？”，“！”，“.”结束");
+		String str=sc.nextLine();//字符串输入
+		System.out.println("字符串的长度："+str.length());
+		String []a=str.split("[\\W]+");
+		System.out.println("单词个数："+a.length);
+		char [] array=str.toCharArray();
+		for(int i=0;i<array.length;i++)
+		{
+			if(array[i]=='?')
+			{
+				sentenceCount++;
+			}
+			if(array[i]=='!')
+			{
+				sentenceCount++;
+			}
+			if(array[i]=='.')
+			{
+				sentenceCount++;
+			}
+		}
+		System.out.println("句子个数："+sentenceCount);		
+	}
+}
+ 
+2、编程实现冒泡排序（数据结构）
+import java.util.Scanner;
+public class demo2 
+{
+	public static void main(String[] args) 
+	{
+		Scanner sc=new Scanner(System.in);
+		int a[]=new int[10];
+		for(int i=0;i<10;i++)
+			a[i]=sc.nextInt();
+			System.out.println("排序后的数据：");
+			paixu(a);
+	}
+	public static void paixu(int a[])
+	{
+		int len=9;int temp;
+		int i,j;
+		for(i=1;i<=len;i++)
+		{
+			for(j=len;j>=1;j--)
+			{
+				if(a[j]<a[j-1])
+				{
+					temp=a[j];
+					a[j]=a[j-1];
+					a[j-1]=temp;
+				}
+		    }
+		}
+		for(i=0;i<10;i++)
+		System.out.print(a[i]+"\t");
+	}
+}
+ 
+3、声明一个数组，保存一个学生的数学、语文、英语、物理、化学等课程的成绩，编写一个程序，计算5门课程的平均成绩，精确到0.1分，成绩值从键盘录入。（学生成绩管理系统）
+
+import java.math.BigDecimal;
+import java.util.Scanner;
+
+public class score
+{
+	public static void main(String[] args)
+	{	
+		Scanner sc=new Scanner(System.in);
+		System.out.println("请输入数学、语文、英语、物理、化学的成绩：");
+		int []s=new int[5];
+		for(int i=0;i<5;i++)
+		{
+			s[i]=sc.nextInt();				
+		}
+		avg(s);
+	}
+
+	public static void avg(int s[])
+	{
+		int sum=0;
+		int avg;
+		for(int i=0;i<s.length;i++)
+		{
+			sum=sum+s[i];
+		}
+		avg=sum/s.length;
+		BigDecimal bg = new BigDecimal(avg);//保留1为小数
+	   double f1 = bg.setScale(1, BigDecimal.ROUND_HALF_UP).doubleValue();
+       System.out.println(f1);
+	}
+
+}
+
+实验六
+编写Application程序，在JFrame中加入2个按钮(JButton)和1个标签(Label)，单击两个按钮，显示按钮的标签于Label。
+
+import javax.swing.JFrame;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import java.awt.FlowLayout;
+public class tuxing
+{
+	public static void main(String[] args)
+	{
+		JFrame frm=new JFrame();
+		frm.setTitle("使用我的管理器");
+		FlowLayout flowlayout=new FlowLayout();
+		frm.setLayout(flowlayout);
+		JLabel label=new JLabel("按钮");
+	    frm.add(label);
+		JButton button1=new JButton("yes");
+		frm.add(button1);
+		JButton button2=new JButton("No");
+	    frm.add(button2);
+		frm.setBounds(500,500,200,200);
+		frm.setVisible(true);	
+	}
+}
+ 
+
+2、在JApplet中加入1个文本框，1个文本区，每次在文本框中输入文本，回车后将文本添加到文本区的最后一行。
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+
+ public class swingtest
+{
+	  public static void main(String[] args)
+	  {
+              new JFrameDemo ();
+	  }
+}
+
+class JFrameDemo  extends JFrame implements ActionListener
+{
+    
+    JTextField text = new JTextField();
+    JTextArea textArea = new JTextArea();
+    public  JFrameDemo()
+    {
+        text.setText("请输入文本");
+        text.setBounds(170,45,240,30);
+        getContentPane().add(text);
+        textArea.setLineWrap(true);
+        textArea.setBounds(170,100,240,60);
+        getContentPane().add(textArea);
+        text.addActionListener(this);
+        setTitle("文本框");
+        setLayout(null);
+        setBounds(200,200,450,500);
+        setVisible(true);
+     }
+
+    public void actionPerformed(ActionEvent e)
+	{
+		textArea.append(text.getText());
+    }
+}
+ 
+
+3、设计一个简单计算器，如下图所示。在“操作数”标签右侧的两个文本框输入操作数，当单击操作符＋，－，×，÷按钮时，对两个操作数进行运算并将结果填入到“结果”标签右侧的文本框中。
+import java.awt.*;
+import java.awt.event.*;
+
+public class Calculater
+{
+	public static void main(String[] args) 
+	{
+		  new TFFrame().launchFrame();	
+	}
+}
+
+class TFFrame extends Frame
+{
+	TextField num1,num2,num3;
+	public void launchFrame()
+	{
+		num1=new TextField(10);
+		num2=new TextField(10);
+		num3=new TextField(10);
+		Button lblPlus1=new Button("+");
+		Button lblPlus2=new Button("-");
+		Button lblPlus3=new Button("*");
+		Button lblPlus4=new Button("/");
+		Label btnEqual=new Label("=");
+		lblPlus1.addActionListener(new Monitor1());
+		lblPlus2.addActionListener(new Monitor2());
+		lblPlus3.addActionListener(new Monitor3());
+		lblPlus4.addActionListener(new Monitor4());
+
+		setLayout(new GridLayout(8,1));
+		add(num1);
+		add(num2);
+		add(lblPlus1);
+		add(lblPlus2);
+		add(lblPlus3);
+		add(lblPlus4);
+		add(btnEqual);
+		add(num3);
+		pack();
+		setVisible(true);
+	}
+
+	class Monitor1 implements ActionListener
+	{
+		public void actionPerformed(ActionEvent e)
+		{
+			int n1=Integer.parseInt(num1.getText());
+			int n2=Integer.parseInt(num2.getText());
+			num3.setText(""+(n1+n2));
+		}
+	}
+		
+	class Monitor2 implements ActionListener
+	{
+		public void actionPerformed(ActionEvent e)
+		{
+			int n1=Integer.parseInt(num1.getText());
+			int n2=Integer.parseInt(num2.getText());
+			num3.setText(""+(n1-n2));
+		}
+	}
+
+	class Monitor3 implements ActionListener
+	{
+		public void actionPerformed(ActionEvent e)
+		{
+			int n1=Integer.parseInt(num1.getText());
+			int n2=Integer.parseInt(num2.getText());
+			num3.setText(""+(n1*n2));
+		}
+	}
+
+	class Monitor4 implements ActionListener
+	{
+		public void actionPerformed(ActionEvent e)
+		{
+			int n1=Integer.parseInt(num1.getText());
+			int n2=Integer.parseInt(num2.getText());
+			num3.setText(""+(n1/n2));
+		}
+	}
+		
+}
+
+ 
+实验九
+从命令行得到5个整数，放入一整型数组，然后打印输出，要求：如果输入数据不为整数，要捕获Integer.parseInt()产生的异常，显示“请输入整数”，捕获输入参数不足5个的异常(数组越界)，显示“请输入至少5个整数”。
+
+public class demo
+{
+	public static void main(String[] args) 
+	{
+		System.out.println("在命令行输入五个数："); 
+		for(int i = 0; i<5;i++) 
+		System.out.println(args[i]); 
+		try{
+			for(int i = 0; i<6;i++)
+			System.out.println(args[i]); 
+		}catch(java.lang.ArrayIndexOutOfBoundsException e){
+			System.out.println("下标越界"); 
+		}
+	}
+}
+
+2、写一个方法void sanjiao(int a,int b,int c)，判断三个参数是否能构成一个三角形，如果不能则抛出异常IllegalArgumentException，显示异常信息a,b,c+”不能构成三角形”，如果可以构成则显示三角形三个边长，在主方法中得到命令行输入的三个整数，调用此方法，并捕获异常。
+import java.util.Scanner;
+
+public class demo2
+{
+	void sanjiao()
+	{ 
+		int a;
+		int b;
+		int c;
+		System.out.println("请输入三条边长");
+		Scanner reader=new Scanner(System.in);
+		a=reader.nextInt();
+		b=reader.nextInt();
+		c=reader.nextInt();
+
+		if(a+b>c&&a+c>b&&b+c>a)
+		{
+			System.out.println("三角形的边长分别为"+"a="+a+" "+"b="+b+" "+"c="+" "+c);
+		}
+		else
+		{
+			System.out.println("不能构成三角形");
+		}
+        if(a<0||b<0||c<0)
+		{
+        	System.out.println("三条边不能为负");
+        }
+			
+	}
+
+	public static void main(String[] args)
+	{
+		demo2 t=new demo2();
+		try{
+			t.sanjiao();
+		}catch(NumberFormatException nfe){
+			System.out.println("请输入正整数");
+		}catch(IllegalArgumentException iae){
+			System.out.println("不能构成三角形！");
+		}catch(Exception e){
+			System.out.println("-----程序出错-----");
+		}
+	}
+		
+}
+ 
+
+3、自定义类Sanj，其中有成员 x,y,z,作为三边长，构造方法Sanj(a,b,c)分别给x,y,z赋值,方法求面积getArea和显示三角形信息(三个边长)showInfo，这2个方法中当三条边不能构成一个三角形时要抛出自定义异常NotSanjiaoException，否则显示正确信息。在另外一个类中的主方法中构造一个Sanj对象(三边为命令行输入的三个整数)，显示三角形信息和面积，要求捕获异常。
+
+import java.util.Scanner;
+
+public class demo2
+{
+	void sanjiao()
+	{ 
+		int a;
+		int b;
+		int c;
+		System.out.println("请输入三条边长");
+		Scanner reader=new Scanner(System.in);
+		a=reader.nextInt();
+		b=reader.nextInt();
+		c=reader.nextInt();
+
+		if(a+b>c&&a+c>b&&b+c>a)
+		{
+			System.out.println("三角形的边长分别为"+"a="+a+" "+"b="+b+" "+"c="+" "+c);
+		}
+		else
+		{
+			System.out.println("不能构成三角形");
+		}
+        if(a<0||b<0||c<0)
+		{
+        	System.out.println("三条边不能为负");
+        }
+			
+	}
+
+	public static void main(String[] args)
+	{
+		demo2 t=new demo2();
+		try{
+			t.sanjiao();
+		}catch(NumberFormatException nfe){
+			System.out.println("请输入正整数");
+		}catch(IllegalArgumentException iae){
+			System.out.println("不能构成三角形！");
+		}catch(Exception e){
+			System.out.println("-----程序出错-----");
+		}
+	}
+		
+}
+ 
+
+
+
+实验十
+讲上列程序利用Runnable接口改写，并上机检验。
+
+class DelayThread extends Thread
+{
+ private static int count=0;
+ private int no;
+ private int delay;
+ public DelayThread(){
+  count++;
+  no=count; 
+}
+public void run(){
+ try{
+ for (int i=0;i<10;i++){
+ delay=(int)(Math.random()*5000);
+ sleep(delay);
+ System.out.println("Thread" +no+"with a delay"+delay);
+ }
+ }catch(InterruptedException e){}}}
+public class MyThread{
+ public static void main(String args[]){
+ DelayThread thread1=new DelayThread();
+ DelayThread thread2=new DelayThread();
+ thread1.start();
+ thread2.start();
+ try{ Thread.sleep(1000);}catch(InterruptedException e){
+ System.out.println("Thread wrong");}}}
+ 
+
+2、讲上列程序利用Runnable接口改写，并上机检验。
+
+public class MyThread1{
+	public static void main(String args[]){
+		DelayThread thread1=new DelayThread();
+		DelayThread thread2=new DelayThread();
+		Thread threadA=new Thread(thread1);
+		Thread threadB=new Thread(thread2);
+		threadA.start();
+		threadB.start();
+		try{
+			Thread.sleep(1000);
+			}
+		catch(InterruptedException e){
+			System.out.println("Thread wrong");
+			}		
+		}
+	}
+class DelayThread implements Runnable{
+	private static int count=0;
+	private int no;
+	private int delay;
+	public DelayThread(){
+		count++;
+		no=count;
+			}
+	public void run(){
+		try{
+			for(int i=0;i<10;i++){
+				delay=(int)(Math.random()*5000);
+				Thread.sleep(delay);
+				System.out.println("Thread "+no+" with a delay "+delay);
+				}
+			}
+		catch(InterruptedException e){
+			return;
+			}
+		}
+	}
+ 
+
+3、利用多线程 编写一个模拟时钟(图形界面程序、Runnable接口)，有时分秒 针
+编写一个应用程序，创建三个线程分别显示各自的时间。
+
+实验十一
+键盘输入10个整数，从小到大进行排序。
+import java.util.Scanner;
+public class InsertSort 
+{
+	double num[]; 
+	Scanner scanner; 
+	public InsertSort() 
+		{  
+		   num = new double[11];  
+	       scanner = new Scanner(System.in);  
+		   num[0] = 0;  
+		   System.out.println("请输入十个数字：");  
+		   for (int i = 1; i < num.length; i++) 
+		   {   
+			   num[i] = scanner.nextDouble();
+		   } 
+		   directSort(num);
+
+		   System.out.println("排序后的结果是：");
+		   for (int i = 1; i <num.length; i++)           
+			   System.out.print(num[i] + " , "); 
+		} 
+		   public void directSort(double n[]) 
+		   {
+			   int i, j;  
+			   for (i = 2; i < n.length; i++) 
+			   {   
+				   n[0] = n[i];// 代码1;   
+			       for (j = i - 1; j >= 1 && n[j] > n[j + 1]; j--) 
+				   {   
+					   n[j + 1] = n[j];// 代码3;    
+					   n[j] = n[0];// 代码4=n[0];   
+				   }  
+				}
+		   }   
+		   public static void main(String[] args) 
+		   {  
+			   InsertSort insertSort = new InsertSort();  
+			   System.exit(0); 
+		   }		   
+}
+ 
+
+2、接收键盘输入的字符串，用FileInputStream类将字符串写入文件，用FileOutputStream类读出文件内容显示在屏幕上。
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+public class FileOperation {
+	    public static void main(String[] args) {
+        try {
+            System.out.println("Pleaseinput:");
+            File myfile = new File("save.txt");
+            byte[] outCh = new byte[100];
+            int bytes = System.in.read(outCh, 0, 100);
+            FileOutputStream Fout = new FileOutputStream(myfile);
+            Fout.write(outCh,0,bytes);
+            byte[] inCh = new byte[bytes];
+            FileInputStream Fin = new FileInputStream(myfile);
+            Fin.read(inCh);
+            System.out.println(new String(inCh));
+        } catch (IOException e) {
+            System.out.println(e.toString());
+        }
+    }
+}
+ 
+
+3、将一个文本文件的内容按行读出，每读出一行就顺序加上行号，并写入到另一个文件中。
+import java.io.*;
+public class addlineno 
+{
+	public static void main(String[] args) 
+	{
+		String str = null;
+		try{
+			FileReader file = new FileReader(".\\addlineno.java");
+			LineNumberReader in = new LineNumberReader(file);
+			while ((str=in.readLine())!=null)
+				System.out.println(in.getLineNumber()+":"+str);
+			in.close();
+		}
+		catch(IOException e)
+		{
+			System.out.println("文件打不开或文件读取错误！");
+		}
+	}
+}
+ 
